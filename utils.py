@@ -1,29 +1,22 @@
 import os
+import time
 from gtts import gTTS
-from googletrans import Translator
+from deep_translator import GoogleTranslator
 
 def translate_caption(caption, target_lang):
-    """
-    Translates English text into Hindi ('hi') or Telugu ('te') using Googletrans.
-    """
     try:
-        translator = Translator()
-        translation = translator.translate(caption, dest=target_lang)
-        return translation.text
+        translated = GoogleTranslator(source='auto', target=target_lang).translate(caption)
+        return translated
     except Exception as e:
-        return f"[Translation Error: Please check internet connection. {e}]"
+        return f"[Translation Error: {e}]"
 
 def text_to_speech(text, lang='en'):
-    """
-    Converts caption text into an audio file using gTTS.
-    Returns the path to the saved audio file.
-    """
     try:
-        tts = gTTS(text=text, lang=lang, slow=False)
-        audio_path = "assets/caption_audio.mp3"
-        
-        # Ensure assets directory exists
         os.makedirs("assets", exist_ok=True)
+        timestamp = int(time.time())
+        audio_path = f"assets/caption_{timestamp}.mp3"
+        
+        tts = gTTS(text=text, lang=lang, slow=False)
         tts.save(audio_path)
         return audio_path
     except Exception:

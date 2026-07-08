@@ -1,0 +1,12 @@
+# Python bytecode and cache
+__pycache__/
+*.pyc
+
+# Local audio tracks and asset folders 
+assets/
+*.mp3
+
+# Virtual environments (Incase meere kotha env create chesthe)
+.venv/
+venv/
+env/
